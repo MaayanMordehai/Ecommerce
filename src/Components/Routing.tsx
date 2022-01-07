@@ -27,7 +27,6 @@ const Routing = () => {
         <MyNavbar pages={pages} brand={brand} />
       <Routes>
         <Route
-            key={brand.name}
             path={brand.path}
             element={<brand.component />}
           />
