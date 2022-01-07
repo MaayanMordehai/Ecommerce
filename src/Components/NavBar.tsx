@@ -32,7 +32,7 @@ const MyNavbar = (props: NavbarProps) => {
             </Nav>
             <Nav>
                 {pages.map((page, index) => {
-                    return <Nav.Link  href={page.path}>{page.name}</Nav.Link>
+                    return <Nav.Link  key={index} href={page.path}>{page.name}</Nav.Link>
                 })}
             
             </Nav>

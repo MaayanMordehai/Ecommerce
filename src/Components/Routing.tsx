@@ -1,25 +1,27 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MyNavbar from "./NavBar";
 import ProductsList from "./ProductsList";
 import Cart from "./Cart";
 
-const pages = [
-  {
-    name: "🛒 Cart",
-    path: "/Cart",
-    component: Cart,
-  },
-];
-
-const brand = {
-    name: "Ecommerce",
-    path: "/",
-    component: ProductsList 
-}
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Routing = () => {
+    const [ numCart, setNumCart ] = useState(0);
+
+    const pages = [
+    {
+        name: `🛒 Cart ${numCart} Products`,
+        path: "/Cart",
+        component: Cart,
+    },
+    ];
+
+    const brand = {
+        name: "Ecommerce",
+        path: "/",
+        component: ProductsList 
+    }
+
   return (
     <Router>
         <MyNavbar pages={pages} brand={brand} />
