@@ -7,12 +7,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 interface Brand {
     name: string;
     path: string;
-    component: any;
 }
 interface Page {
     name: string;
     path: string;
-    component: any;
 }
 interface NavbarProps {
     pages: Array<Page>;
