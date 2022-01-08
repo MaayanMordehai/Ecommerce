@@ -40,19 +40,19 @@ const Product = (props: ProductProps) => {
   </Card>
   <Card>
     <Card.Body>
-      <Card.Header>
+      <Card.Header className="text-center">
       <span className="badge bg-success mr-2">{product.category.name}</span>
       <br/>
       {product.category.subCategories.map((catagory)=> {
         return <span className="badge bg-danger mr-2">{catagory}</span>
       })}
-      </Card.Header>
-      <Card.Title>{product.name}</Card.Title>
+      </Card.Header >
+      <Card.Title className="text-center">{product.name}</Card.Title>
       <Card.Text>
-        {product.description}
+        {product.description}{' '}
         <br/>
         <br/>
-        Price : {product.price}$
+        Price: {product.price}$
         <br/>
         <br/>
         <Button variant="outline-primary">Add To 🛒</Button>
