@@ -48,19 +48,24 @@ const Product = (props: ProductProps) => {
       })}
       </Card.Header >
       <Card.Title className="text-center">{product.name}</Card.Title>
-      <Card.Text>
-        {product.description}{' '}
+      <Card.Text className='white'>
+        {product.description}
         <br/>
         <br/>
-        Price: {product.price}$
+        <strong>Price: {product.price}$</strong>
         <br/>
         <br/>
         <Button variant="outline-primary">Add To 🛒</Button>
         <br/>
         <br/>
-        <h5> Additional Information </h5>
+        <div><u><strong>Brand</strong></u></div>
+        {product.sellerName}
+        <br />
+        <br />
         {product.additionalInfo.map((add) => {
-          return <div>{add.title}: {add.info}</div>
+          return <div>
+            <div><u><strong>{add.title}</strong></u></div>
+            <div> {add.info}</div><br /></div>
         })}
         <br/>
         <br/>

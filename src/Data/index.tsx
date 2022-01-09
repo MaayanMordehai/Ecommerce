@@ -94,7 +94,55 @@ export const staticProducts = [
               info: "MUMI"
           }
       ]
-    }
+    },
+    {
+        id: 4,
+        name: "SONY PS5 BLU RAY ADDITION",
+        imageurl: "https://d3m9l0v76dty0.cloudfront.net/system/photos/6514389/original/62b01ab495bc7c7db8279f1d23ddbfb3.jpg",
+        description: "The PlayStation 5 (PS5) is a home video game console developed by Sony Interactive Entertainment. Announced in 2019 as the successor to the PlayStation 4, the PS5 was released on November 12, 2020, in Australia, Japan, New Zealand, North America, and South Korea, with worldwide release following a week later. The PS5 is part of the ninth generation of video game consoles, along with Microsoft's Xbox Series X and Series S consoles, which were released in the same month.\n\nThe base model includes an optical disc drive compatible with Ultra HD Blu-ray discs. The Digital Edition lacks this drive, allowing it to serve as a lower-cost model for those who prefer to buy games through digital download. The two variants were launched simultaneously.",
+        price: 2500,
+        amount: 4,
+        uploadedDate: new Date(2022, 1, 6, 6, 4, 23, 11),
+        category: {
+          name: "Electronic",
+          subCategories: ["Sony"]
+        },
+        sellerName: "Sony",
+        additionalInfo: [
+            {
+                title: "Storage",
+                info: "825GB"
+            },
+            {
+                title: "CPU MEIROT",
+                info: "3,500 MHz"
+            },
+            {
+                title: "RAM",
+                info: "16G"
+            }
+        ]
+      },
+      {
+        id: 5,
+        name: "Harry Potter And The Phoilosopher's Stone",
+        imageurl: "https://www.peterharrington.co.uk/blog/wp-content/uploads/2018/03/harry.jpg",
+        description: "Harry Potter and the Philosopher’s Stone is an enthralling start to Harry’s journey toward coming to terms with his past and facing his future. It was the first book written by Rowling, and she was praised for creating well-rounded characters and a fully realized wizard universe that coexisted with the present world. An almost immediate critical and popular success, it was translated into some 60 languages. The six later novels about Harry’s further adventures at Hogwarts were equally popular. The film Harry Potter and the Sorcerer’s Stone (2001) was also a blockbuster.",
+        price: 150,
+        amount: 17,
+        uploadedDate: new Date(2022, 1, 6, 6, 4, 23, 11),
+        category: {
+          name: "Books",
+          subCategories: ["Harry Potter"]
+        },
+        sellerName: "Worner Bros",
+        additionalInfo: [
+            {
+                title: "Auther",
+                info: "JK Rolling"
+            }
+        ]
+      },
   ];
 
 export default staticProducts;
