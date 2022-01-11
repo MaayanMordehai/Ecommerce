@@ -31,6 +31,7 @@ interface ProductProps {
 
 const Product = (props: ProductProps) => {
   const {product} = props
+  const isInCart = false;
 
   return (
   <CardGroup>
@@ -55,7 +56,7 @@ const Product = (props: ProductProps) => {
         <strong>Price: {product.price}$</strong>
         <br/>
         <br/>
-        <Button variant="outline-primary">Add To 🛒</Button>
+        <Button variant="outline-primary">{isInCart ? "Remove From 🛒" : "Add To 🛒"}</Button>
         <br/>
         <br/>
         <div><u><strong>Brand</strong></u></div>

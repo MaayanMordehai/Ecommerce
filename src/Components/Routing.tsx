@@ -5,6 +5,8 @@ import ProductsList from "./ProductsList";
 import Cart from "./Cart";
 import staticProducts from "../Data/index"
 import ProductComp from "./Product";
+import { useSelector} from 'react-redux'
+
 
 interface Category {
     name: string,
@@ -31,7 +33,7 @@ interface Product {
 // static info we will usually get from server
 
 const Routing = () => {
-    const [ numCart, setNumCart ] = useState(0);
+    const numCart = 0;
     const [ products, setProducts ] = useState<Array<Product>>(staticProducts);
 
     const navOptions = 
