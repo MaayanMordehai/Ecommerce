@@ -1,38 +1,39 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Card, CardGroup, Button} from 'react-bootstrap';
+import { Product } from '../schemas/product.schema';
+import { State } from '../schemas/state.schema';
+import { connect } from 'react-redux'
 
-interface Category {
-    name: string,
-    subCategories: Array<string>
+interface ProductStateProps {
+  cartProducts: Product[],
 }
 
-interface AdditionalInfo {
-    title: string,
-    info: string
+interface ProductDispatchProps {
+  onAddToCart: Function,
+  onRemoveFromCart: Function
 }
 
-interface Product {
-    id: number,
-    name: string,
-    imageurl: string,
-    uploadedDate: Date,
-    price: number,
-    description: string,
-    amount: number,
-    category: Category,
-    sellerName: string,
-    additionalInfo: Array<AdditionalInfo>,
-}
-
-interface ProductProps {
+interface ProductProps extends ProductStateProps, ProductDispatchProps {
   product: Product
 }
 
-const Product = (props: ProductProps) => {
-  const {product} = props
-  const isInCart = false;
+const storeProduct = (props: ProductProps) => {
+  const {product, cartProducts, onAddToCart, onRemoveFromCart} = props;
 
+  const isInCart = (product: any) : boolean => {
+    return (cartProducts.includes(product));
+  };
+
+
+  const changeCart = (product: Product) => {
+    if (isInCart(product)) {
+      onRemoveFromCart(product);
+    } else {
+      onAddToCart(product);
+    }
+  }
+  
   return (
   <CardGroup>
     <Card>
@@ -44,8 +45,8 @@ const Product = (props: ProductProps) => {
       <Card.Header className="text-center">
       <span className="badge bg-success mr-2">{product.category.name}</span>
       <br/>
-      {product.category.subCategories.map((catagory)=> {
-        return <span className="badge bg-danger mr-2">{catagory}</span>
+      {product.category.subCategories.map((catagory, index)=> {
+        return <span key={index} className="badge bg-danger mr-2">{catagory}</span>
       })}
       </Card.Header >
       <Card.Title className="text-center">{product.name}</Card.Title>
@@ -56,15 +57,15 @@ const Product = (props: ProductProps) => {
         <strong>Price: {product.price}$</strong>
         <br/>
         <br/>
-        <Button variant="outline-primary">{isInCart ? "Remove From 🛒" : "Add To 🛒"}</Button>
+        <Button variant="outline-primary" onClick={() => changeCart(product)}>{isInCart(product) ? "Remove From 🛒" : "Add To 🛒"}</Button>
         <br/>
         <br/>
         <div><u><strong>Brand</strong></u></div>
         {product.sellerName}
         <br />
         <br />
-        {product.additionalInfo.map((add) => {
-          return <div>
+        {product.additionalInfo.map((add, index) => {
+          return <div key={index}>
             <div><u><strong>{add.title}</strong></u></div>
             <div> {add.info}</div><br /></div>
         })}
@@ -81,4 +82,17 @@ const Product = (props: ProductProps) => {
   );
 }
 
-export default Product;
+const mapStateToProps = (state: State) : ProductStateProps => {
+  return {
+    cartProducts: state.cartProducts,
+  };
+};
+
+const mapDispatchToProps = (dispatch : any) : ProductDispatchProps => {
+    return {
+      onAddToCart: (product : Product) => dispatch({type: 'ADD_TO_CART', product: product}),
+      onRemoveFromCart: (product : Product) => dispatch({ type: 'REMOVE_FROM_CART', product: product})
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(storeProduct);

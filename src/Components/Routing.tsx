@@ -3,39 +3,20 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MyNavbar from "./NavBar";
 import ProductsList from "./ProductsList";
 import Cart from "./Cart";
-import staticProducts from "../Data/index"
 import ProductComp from "./Product";
-import { useSelector} from 'react-redux'
+import { connect } from 'react-redux'
+import { State } from "../schemas/state.schema";
+import { Product } from "../schemas/product.schema"
 
-
-interface Category {
-    name: string,
-    subCategories: Array<string>
+interface RoutingProps {
+    products: Product[],
+    numCart: Number,
+    cartProducts: Product[]
 }
 
-interface AdditionalInfo {
-    title: string,
-    info: string
-}
 
-interface Product {
-    id: number,
-    name: string,
-    imageurl: string,
-    uploadedDate: Date,
-    price: number,
-    amount: number,
-    description: string,
-    category: Category,
-    sellerName: string,
-    additionalInfo: Array<AdditionalInfo>,
-}
-// static info we will usually get from server
-
-const Routing = () => {
-    const numCart = 0;
-    const [ products, setProducts ] = useState<Array<Product>>(staticProducts);
-
+const Routing = (props: RoutingProps) => {
+    const { products, numCart, cartProducts } = props;
     const navOptions = 
     { 
         brand: {
@@ -65,7 +46,7 @@ const Routing = () => {
 
   return (
     <Router>
-        <MyNavbar pages={navOptions.pages} brand={navOptions.brand} />
+        <MyNavbar pages={navOptions.pages} brand={navOptions.brand}/>
       <Routes>
         {pages.map((page) => (
           <Route
@@ -86,4 +67,12 @@ const Routing = () => {
   );
 };
 
-export default Routing;
+const mapStateToProps = (state: State) : RoutingProps => {
+  return {
+    numCart: state.numCart,
+    cartProducts: state.cartProducts,
+    products: state.products
+  };
+};
+
+export default connect(mapStateToProps)(Routing);
