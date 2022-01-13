@@ -12,7 +12,3 @@ export default store;
 //store.dispatch({type: 'ADD_TO_CART', payload: { product : Product }});
 //store.dispatch({type: 'REMOVE_FROM_CART', payload: { product : }});
 //console.log(store.getState());
-
-store.subscribe(() => {
-    store.getState();
-})
