@@ -5,11 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { persistStore } from 'redux-persist';
 
-
-store.subscribe(() => {
-  store.getState();
-})
 
 ReactDOM.render(
   <React.StrictMode>

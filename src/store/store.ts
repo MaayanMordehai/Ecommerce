@@ -1,11 +1,18 @@
 import { createStore } from 'redux'
 import  cartReducer from './reducer';
+
+
+
+
+
 const store = createStore(cartReducer);
 
-// Subscription
+
 store.subscribe(() => {
-    console.log('[Subscription]', store.getState());
+    return store.getState();
 });
+  
+
 
 export default store;
 // Dispatching Action

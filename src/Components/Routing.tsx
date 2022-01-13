@@ -16,6 +16,7 @@ interface RoutingProps {
 
 
 const Routing = (props: RoutingProps) => {
+
     const { products, numCart, cartProducts } = props;
     const navOptions = 
     { 
