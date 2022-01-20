@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import configureStore from './redux/helpers/store';
-import { persistStore } from 'redux-persist';
 
 const store = configureStore();
 ReactDOM.render(
