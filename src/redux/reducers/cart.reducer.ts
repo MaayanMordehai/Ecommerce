@@ -31,6 +31,14 @@ const removeFromCart = (state: State, product: Product) => {
     }
 }
 
+const checkout = (state : State) => {
+    return {
+        products: [...state.products],
+        numCart: 0,
+        cartProducts: []
+    }
+}
+
 let numCartInLocalStorage = parseInt(localStorage.getItem('numCart') || '0');
 let cartProductsInLocalStorage = JSON.parse(localStorage.getItem('cartProducts') || '[]');
 let productsInLocalStorage = JSON.parse(localStorage.getItem('products') || JSON.stringify(staticProducts));
@@ -48,6 +56,8 @@ const cartReducer = (state : State | undefined = initialState, action : any):Sta
             return addToCart(state, payload);
         case cartActionTypes.REMOVE_FROM_CART:
             return removeFromCart(state, payload);
+        case cartActionTypes.CHECKOUT:
+            return checkout(state)
         default:
             console.log("here");
             console.log(state);
