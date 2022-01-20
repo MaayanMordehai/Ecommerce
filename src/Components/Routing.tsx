@@ -9,9 +9,7 @@ import StoreProduct from "./Product";
 
 const Routing = () => {
 
-    const products = useSelector((state : State) => state.products);
     const numCart = useSelector((state : State) => state.numCart);
-    const cartProducts = useSelector((state : State) => state.cartProducts);
 
     console.log(numCart)
     const navOptions = 
