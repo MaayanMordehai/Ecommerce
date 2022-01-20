@@ -3,21 +3,17 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MyNavbar from "./NavBar";
 import ProductsList from "./ProductsList";
 import Cart from "./Cart";
-import ProductComp from "./Product";
-import { connect } from 'react-redux'
-import { State } from "../schemas/state.schema";
-import { Product } from "../schemas/product.schema"
+import { useSelector } from 'react-redux'
+import { State} from "../schemas/state.schema"
+import StoreProduct from "./Product";
 
-interface RoutingProps {
-    products: Product[],
-    numCart: Number,
-    cartProducts: Product[]
-}
+const Routing = () => {
 
+    const products = useSelector((state : State) => state.products);
+    const numCart = useSelector((state : State) => state.numCart);
+    const cartProducts = useSelector((state : State) => state.cartProducts);
 
-const Routing = (props: RoutingProps) => {
-
-    const { products, numCart, cartProducts } = props;
+    console.log(numCart)
     const navOptions = 
     { 
         brand: {
@@ -43,6 +39,11 @@ const Routing = (props: RoutingProps) => {
             path: "/Cart",
             component: Cart 
         },
+        {
+            name: "Product",
+            path: "/Product/:id",
+            component: StoreProduct
+        }
     ]
 
   return (
@@ -56,24 +57,10 @@ const Routing = (props: RoutingProps) => {
             element={<page.component />}
           />
         ))}
-        {products.map((product) => (
-          <Route
-            key={product.id}
-            path={`/Product/${product.id}`}
-            element={<ProductComp product={product}/>}
-          />
-        ))}
       </Routes>
     </Router>
   );
 };
 
-const mapStateToProps = (state: State) : RoutingProps => {
-  return {
-    numCart: state.numCart,
-    cartProducts: state.cartProducts,
-    products: state.products
-  };
-};
 
-export default connect(mapStateToProps)(Routing);
+export default Routing;

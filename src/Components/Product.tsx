@@ -3,23 +3,27 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Card, CardGroup, Button} from 'react-bootstrap';
 import { Product } from '../schemas/product.schema';
 import { State } from '../schemas/state.schema';
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { cartActionTypes } from '../redux/action-types/cart.action-types';
+import { useParams } from 'react-router';
 
-interface ProductStateProps {
-  cartProducts: Product[],
-}
 
-interface ProductDispatchProps {
-  onAddToCart: Function,
-  onRemoveFromCart: Function
-}
+const StoreProduct = () => {
+  const { id } = useParams();
+  const products = useSelector((state: State) => state.products)
+  const cartProducts = useSelector((state : State) => state.cartProducts);
+  const dispatch = useDispatch();
+ 
+  const getProduct = () => {
+    for (let currProduct of products) {
+      if (currProduct.id.toString() === id) {
+        return currProduct;
+      }
+    }
+    return products[0];
+  }
 
-interface ProductProps extends ProductStateProps, ProductDispatchProps {
-  product: Product
-}
-
-const storeProduct = (props: ProductProps) => {
-  const {product, cartProducts, onAddToCart, onRemoveFromCart} = props;
+  const product : Product = getProduct();
 
   const isInCart = (product: any) : boolean => {
     return (cartProducts.includes(product));
@@ -28,9 +32,11 @@ const storeProduct = (props: ProductProps) => {
 
   const changeCart = (product: Product) => {
     if (isInCart(product)) {
-      onRemoveFromCart(product);
+      dispatch({ type: cartActionTypes.REMOVE_FROM_CART, payload: product})
+      //cartActions.removeFromCart(product);
     } else {
-      onAddToCart(product);
+      dispatch({ type: cartActionTypes.ADD_TO_CART, payload: product})
+      //cartActions.addToCart(product);
     }
   }
   
@@ -75,24 +81,12 @@ const storeProduct = (props: ProductProps) => {
       </Card.Text>
     </Card.Body>
     <Card.Footer>
-      <small className="text-muted">Uploaded on {product.uploadedDate.getFullYear()}-{product.uploadedDate.getMonth()}-{product.uploadedDate.getDate()}</small>
+      <small className="text-muted">Uploaded on {product.uploadedDate}</small>
     </Card.Footer>
   </Card>
   </CardGroup>
   );
 }
 
-const mapStateToProps = (state: State) : ProductStateProps => {
-  return {
-    cartProducts: state.cartProducts,
-  };
-};
 
-const mapDispatchToProps = (dispatch : any) : ProductDispatchProps => {
-    return {
-      onAddToCart: (product : Product) => dispatch({type: 'ADD_TO_CART', product: product}),
-      onRemoveFromCart: (product : Product) => dispatch({ type: 'REMOVE_FROM_CART', product: product})
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(storeProduct);
+export default StoreProduct;

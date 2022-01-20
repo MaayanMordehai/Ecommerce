@@ -1,8 +1,7 @@
-import { Reducer } from "@reduxjs/toolkit";
-import staticProducts from "../Data/index"
-import { State } from "../schemas/state.schema";
-import { Product } from "../schemas/product.schema";
-
+import staticProducts from "../../Data/index"
+import { State } from "../../schemas/state.schema";
+import { Product } from "../../schemas/product.schema";
+import { cartActionTypes } from "../action-types/cart.action-types";
 
 const addToCart = (state: State, product: Product) => {
     const newProductsList = [...state.products];
@@ -32,29 +31,29 @@ const removeFromCart = (state: State, product: Product) => {
     }
 }
 
-interface ActionOptions {
-    [key: string]: Function
-}
-
-const actionsOptions : ActionOptions = {
-    "ADD_TO_CART": addToCart,
-    "REMOVE_FROM_CART": removeFromCart,
-}
+let numCartInLocalStorage = parseInt(localStorage.getItem('numCart') || '0');
+let cartProductsInLocalStorage = JSON.parse(localStorage.getItem('cartProducts') || '[]');
+let productsInLocalStorage = JSON.parse(localStorage.getItem('products') || JSON.stringify(staticProducts));
 
 const initialState: State = {
-    numCart: 0,
-    cartProducts: [],
-    products: staticProducts,
+    numCart: numCartInLocalStorage,
+    cartProducts: cartProductsInLocalStorage,
+    products: productsInLocalStorage,
 }
 
 const cartReducer = (state : State | undefined = initialState, action : any):State => {
-    if (Object.keys(actionsOptions).includes(action.type)) {
-        return actionsOptions[action.type](state, action.product);
+    const { type, payload } = action;
+    switch (type) {
+        case cartActionTypes.ADD_TO_CART:
+            return addToCart(state, payload);
+        case cartActionTypes.REMOVE_FROM_CART:
+            return removeFromCart(state, payload);
+        default:
+            console.log("here");
+            console.log(state);
+            return state;
     }
-    console.log(actionsOptions)
-    console.log("Unsupported actions");
-    console.log(action);
-    return state;
+
 }
 
 
